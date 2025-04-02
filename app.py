@@ -3,15 +3,14 @@ from src.pipeline.predict_pipeline import CustomData,PredictPipeline
 
 application = Flask(__name__)
 
-app = application
 
 ## Route for home page
 
-@app.route('/')
+@application.route('/')
 def home():
     return render_template('index.html')
 
-@app.route('/predictdata',methods=['GET','POST'])
+@application.route('/predictdata',methods=['GET','POST'])
 def predict_data():
     if request.method == 'GET':
         return render_template('home.html')
@@ -25,7 +24,6 @@ def predict_data():
             reading_score = request.form.get('reading_score'),
             writing_score = request.form.get('writing_score')
         )
-        print(data)
         pred_df = data.get_data_as_dataframe()
         print(pred_df)
         results = data.predict(pred_df)
@@ -33,4 +31,4 @@ def predict_data():
     
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')    
+    application.run(host='0.0.0.0',port=5000)    
